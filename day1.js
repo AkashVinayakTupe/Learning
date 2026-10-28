@@ -85,3 +85,9 @@ const total = products
 console.log(total);
 
 // i am akash i have commited this from office
+function git (){
+  console.log("code is commited");
+  
+}
+
+git();
