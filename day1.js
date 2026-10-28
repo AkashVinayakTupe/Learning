@@ -83,3 +83,5 @@ const total = products
   .reduce((sum, price) => sum + price, 0);
 
 console.log(total);
+
+// i am akash i have commited this from office
