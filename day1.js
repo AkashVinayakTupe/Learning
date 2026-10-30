@@ -167,6 +167,8 @@ for (let i = 0; i < Fruit.length; i++) {
 }
 console.log(counttttt);
 
+//new code is commited
+
 
 
 
