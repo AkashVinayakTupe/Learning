@@ -173,3 +173,23 @@ console.log(counttttt);
 
 
 
+<<<<<<< Updated upstream
+=======
+git();
+
+
+const users={
+  name :"akash",
+  age :18,
+  email :"akash@gmail.com"
+}
+
+function getUsers(...getUsers){
+return getUsers;
+
+
+}
+
+
+console.log(getUsers(users.age,users.name));
+>>>>>>> Stashed changes
