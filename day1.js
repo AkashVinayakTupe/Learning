@@ -167,29 +167,29 @@ for (let i = 0; i < Fruit.length; i++) {
 }
 console.log(counttttt);
 
-//new code is commited
 
 
 
 
+const users = {
+  getUsers: (...userss) => {
+    return userss;
+  }
+};
 
-<<<<<<< Updated upstream
-=======
-git();
+console.log(users.getUsers("Akash", 25));
+console.log(users.getUsers("rohan", 28));
 
+let num = [1, 2, 3, 4, 5, 6];
 
-const users={
-  name :"akash",
-  age :18,
-  email :"akash@gmail.com"
+let RevNum = [];
+let j =0;
+
+for (let i = num.length-1; i >= 0; i--) {
+ RevNum[j]=num[i];
+ j++;
+  
 }
-
-function getUsers(...getUsers){
-return getUsers;
+console.log(RevNum);
 
 
-}
-
-
-console.log(getUsers(users.age,users.name));
->>>>>>> Stashed changes
