@@ -9,7 +9,7 @@ console.log(Num.map((Num)=>Num*Num));
 
 const Users=[{name:"akash",age:18},{name:"Rohan",age:15},{name:"Sagar",age:19},{name:"Saurabh",age:10},{name:"Tejas",age:15},{name:"Chaitan",age:22}];
 
-const Filter= Users.filter((Users)=>Users.age>=18);
+const Filter= Users.filter((Users)=>Users.age > 18);
 console.log(Filter);
 
 
@@ -41,7 +41,7 @@ console.log(MergedArray);
 const obj1={namee:"Akash", age:18, address: {city:"pune"}};
 const obj2={name:"Chaitan",age:22};
 
-const mergedObj={...obj1,obj2};
+const mergedObj={...obj1,...obj2};
 
 console.log(mergedObj);
 
@@ -49,23 +49,31 @@ console.log(mergedObj);
 
 // Ek function likho jo sentence mein sabse zyada baar aane wala word return kare.
 
+function MostWordFromSentance(Sentance) {
+    let words = Sentance.toLowerCase().split(" ");
+    let count = {};
+   let maxCount = 0;
+   let maxWord = "";
 
-const mostFrequentWord = (sentence) => {
-  const words = sentence.toLowerCase().split(/\s+/);
+  for (let i = 0; i < words.length; i++) {
+    let word = words[i];
+ 
+         if (count[word] === undefined) {
+       count[word] = 1;
+                         } else {
+      count[word]++;
+    }
 
-  const count = words.reduce((acc, word) => {
-    acc[word] = (acc[word] || 0) + 1;
-    return acc;
-  }, {});
+         if   (count[word] > maxCount) {
+                              maxCount = count[word];
+      maxWord = word; 
+       }
+  }   
 
-  return Object.keys(count).reduce((a, b) =>
-    count[a] >= count[b] ? a : b
-  );
-};
+     return maxWord;
+}
 
-console.log(
-  mostFrequentWord("hello world hello javascript hello")
-);
+console.log(MostWordFromSentance("Hello World Hello Akaash"));
 
 
 // 6  Product list se sirf in-stock items filter karo, phir unke prices nikalo, phir total karo (filter, map, reduce chain).
@@ -84,10 +92,104 @@ const total = products
 
 console.log(total);
 
-// i am akash i have commited this from office
-function git (){
-  console.log("code is commited");
+
+let arr=["a","b","a","c","b","a"];
+let count={};
+let maxcount=0;
+
+for (let i = 0; i < arr.length; i++) {
+  const letters = arr[i];
+  if (count[letters]===undefined) {
+
+    count[letters]=1;
+
+    
+  }else{
+    count[letters]++;
+    
+  }
   
 }
+console.log(count);
 
-git();
+
+
+let a = [40, 9,20, 2, 7,15];
+let countNumber=a[0];
+
+for (let i = 1; i < a.length; i++) {
+  const Number = a[i];
+
+if (Number>countNumber) {
+
+  countNumber=Number;
+}
+  
+}
+  console.log("Bigest Numbers is " + countNumber);
+
+  let Numbersss=[10,20,330,40,50];
+  let totalaa=0
+  for (let i = 0; i < Numbersss.length; i++) {
+     totalaa = totalaa+Numbersss[i];
+    
+  }
+  console.log(totalaa);
+  
+  let evenNumber=[10,20,10,40,50];
+  let evencount=0;
+
+  for (let i = 0; i < evenNumber.length; i++) {
+
+    
+    if (evenNumber[i]%2==0) {
+      evencount++;
+    }
+    
+  }
+  console.log(evencount);
+  
+
+
+  const Fruit=["banana","apple","banana","sitafhal","greps"];
+
+  let counttttt=0
+// let FruitCount=Fruit.filter((Fruit)=>Fruit==="banana");
+
+// console.log(FruitCount.length);
+
+for (let i = 0; i < Fruit.length; i++) {
+ if (Fruit[i]==="banana") {
+      counttttt++;
+  
+ }
+  
+}
+console.log(counttttt);
+
+
+
+
+
+const users = {
+  getUsers: (...userss) => {
+    return userss;
+  }
+};
+
+console.log(users.getUsers("Akash", 25));
+console.log(users.getUsers("rohan", 28));
+
+let num = [1, 2, 3, 4, 5, 6];
+
+let RevNum = [];
+let j =0;
+
+for (let i = num.length-1; i >= 0; i--) {
+ RevNum[j]=num[i];
+ j++;
+  
+}
+console.log(RevNum);
+
+
