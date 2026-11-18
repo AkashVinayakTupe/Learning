@@ -26,3 +26,32 @@ for (let i = 0; i < Fruit.length; i++) {
     
 }
 console.log(count);
+
+
+let a=10;
+for (let i = 0; i <= 10; i++) {
+    let table=a*i
+    console.log(table);
+    
+}
+
+
+let counrword="AAkashTupe";
+
+let Tolowwercase=counrword.toLocaleLowerCase();
+
+let countsssss=0;
+for (let i = 0; i < Tolowwercase.length; i++) {
+  let counrwordextract=Tolowwercase[i]
+
+    if (counrwordextract=="a") {
+        countsssss++;
+    }
+    
+}
+console.log(countsssss);
+
+
+let newStr="Akash";
+let suubstre=newStr.substring(0,2);
+console.log(suubstre);
