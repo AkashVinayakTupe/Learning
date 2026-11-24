@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .colour{
+            padding-top: 50px;
+        }
+#gray{
+    border: 2px solid white;
+    padding: 20px;
+    background-color:gray ;
+    color: white;
+}
+#black{
+    border: 2px solid white;
+    padding: 20px;
+    background-color:black ;
+    color: white;
+
+}
+
+#blue{
+    border: 2px solid white;
+    padding: 20px;
+        background-color:blue ;
+    color: white;
+
+}
+#white{
+    border: 2px solid white;
+    padding: 20px;
+    background-color: white;
+}
+    </style>
+</head>
+<body>
+    <div class="colour">
+    <div class="box">
+        <span id="gray"  class="button">gray</span>
+        <span id="black" class="button">balck</span>
+        <span id="blue" class="button">blue</span>
+        <span id="white" class="button">white</span>
+    </div>
+    </div>
+</body>
+<script>
+ const button=document.querySelectorAll('.button');
+ 
+ const body=document.querySelector('body')
+ let count={};
+
+ const colour=[];
+
+button.forEach(button => {
+    console.log(button);
+
+    button.addEventListener('click',(e)=>{
+        const selectedColor = e.target.id;
+       console.log(e.target.id);
+       body.style.backgroundColor=e.target.id;
+        console.log(`you prassed ${e.target.id} button `);
+      
+     colour.push(e.target.id);
+     
+     console.log(colour);
+       count[selectedColor] = (count[selectedColor] || 0) + 1;
+
+        console.log("Clicked color:", selectedColor);
+        console.log("Color history:", colour);
+        console.log("Color count:", count);
+
+    })
+
+    
+});
+
+</script>
+</html>
