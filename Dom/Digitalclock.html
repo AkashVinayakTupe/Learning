@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+            body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+#Time{
+       
+    border: 2px solid white;
+ padding: 20px;
+    border-radius: 20px;
+    background-color: orange;
+    }
+    </style>
+    
+</head>
+<body style="background-color: black;"> 
+    <div class="clock" >
+        <h1 style="color: white; margin-bottom: 50px;">Your Clock Is Here</h1>
+        <span id="Time" style=" margin-left: 60px;"></span>
+    </div>
+</body>
+<script>
+   
+
+    setInterval( function date() {
+         let date=new Date();
+    // console.log(date);
+    
+    document.getElementById('Time').innerHTML=date.toLocaleString();
+    },1000);   
+</script>
+</html>
