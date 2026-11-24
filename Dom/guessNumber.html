@@ -170,11 +170,14 @@
             placeholder="Enter your guess"
             min="1"
             max="10"
+            step="1"
         >
 
         <button onclick="Guess()">Guess Number 🚀</button>
 
-        <span id="MSG">Your result will appear here...</span>
+        <span id="MSG" aria-live="polite">
+            Your result will appear here...
+        </span>
 
         <p class="attempts">
             Attempts: <span id="count">0</span>
@@ -188,6 +191,7 @@
 
     <script>
 
+        // Generate random number between 1 and 10
         let randomNumber = Math.floor(Math.random() * 10) + 1;
 
         let count = 0;
@@ -202,35 +206,57 @@
 
             let result = document.getElementById('MSG');
 
-            if (input.value === "" || YourGuess < 1 || YourGuess > 10) {
-                result.innerHTML = "⚠️ Please enter a number between 1-10";
+            // Input validation
+            if (
+                input.value.trim() === "" ||
+                !Number.isInteger(YourGuess) ||
+                YourGuess < 1 ||
+                YourGuess > 10
+            ) {
+                result.innerText = "⚠️ Please enter a whole number between 1-10";
                 return;
             }
 
+            // Increase attempts
             count++;
 
             document.getElementById('count').innerText = count;
 
+            // Check guess
             if (YourGuess > randomNumber) {
 
-                result.innerHTML = "📈 Too High! Try a smaller number.";
+                result.innerText = "📈 Too High! Try a smaller number.";
 
             }
             else if (YourGuess < randomNumber) {
 
-                result.innerHTML = "📉 Too Low! Try a bigger number.";
+                result.innerText = "📉 Too Low! Try a bigger number.";
 
             }
             else {
 
-                result.innerHTML = `🎉 Congratulations! You won in ${count} attempts!`;
+                result.innerText =
+                    `🎉 Congratulations! You won in ${count} attempts!`;
 
                 gameOver = true;
             }
 
+            // Clear input
             input.value = "";
+            input.focus();
+
         }
 
+        // Enter key support
+        document.getElementById('Number').addEventListener('keydown', function(event) {
+
+            if (event.key === "Enter") {
+                Guess();
+            }
+
+        });
+
+        // Restart game
         function Restart() {
 
             randomNumber = Math.floor(Math.random() * 10) + 1;
@@ -239,10 +265,13 @@
             gameOver = false;
 
             document.getElementById('count').innerText = 0;
+
             document.getElementById('MSG').innerText =
                 "Your result will appear here...";
 
             document.getElementById('Number').value = "";
+
+            document.getElementById('Number').focus();
 
         }
 
