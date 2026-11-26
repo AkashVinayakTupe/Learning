@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <ul id="images">
+            <li id="owl">Owl</li>
+            <li id="dog">dog</li>
+            <li id="men">men</li>
+        </ul>
+    </div>
+</body>
+<script>
+//   document.getElementById('owl').addEventListener('click',(e)=>{
+// alert(`Hello ${e.target.id}`)
+//   })
+
+  document.getElementById('images').addEventListener('click',(e)=>{
+         
+    //   const removeit=e.target.tagName;
+
+   if (e.target.tagName === 'LI') {
+    e.target.remove();
+}
+  })
+  
+</script>
+</html>
