@@ -1,0 +1,501 @@
+Project Brief: Python-Based Landing Page & Email QA Comparison Tool
+1. My Background
+
+I am a PHP developer and QA tester working in a B2B company.
+
+I have Python installed on my Windows computer, but I am a beginner in Python. I don't know how to create Python projects, install libraries, run Python files, or build desktop applications.
+
+I am familiar with PHP development concepts, so explain Python concepts using PHP comparisons wherever useful.
+
+Important technical restrictions:
+
+I currently have Python installed.
+I do not want to use Laravel, Django, Flask, FastAPI, or any other web framework.
+I want a simple desktop application.
+Prefer Python's built-in Tkinter for the GUI.
+Use only the minimum necessary Python libraries.
+Explain everything step by step.
+Do not assume I know Python.
+2. Project Objective
+
+I want to build a desktop application called:
+
+Landing Page & Email QA Mapper
+
+In my company, clients provide landing page URLs. Our developers create landing pages and email pages based on the client's content.
+
+As a QA tester, my responsibility is to verify that the Title and Abstract on our landing page and email page match the original client-provided content.
+
+The problem is that our Excel files contain many columns, but we only need a few specific columns.
+
+I want an application that:
+
+Uploads an Excel file.
+Automatically reads all Excel column names.
+Allows me to select which columns contain the required URLs and reference content.
+Visits the selected URLs.
+Extracts only the required Title and Abstract.
+Compares our landing page and email content against the original reference.
+Shows missing, extra, and changed content.
+Generates a downloadable Excel QA report.
+3. Excel Upload and Dynamic Column Mapping
+
+My Excel files may contain many columns.
+
+The application must NOT use hardcoded Excel column names.
+
+After uploading an Excel file, it should:
+
+Read all headers from the first row.
+Display all available column names in dropdown menus.
+Allow me to choose the appropriate columns.
+Support different Excel structures for different projects.
+
+The application should support these fields:
+
+Application Field	Excel Column
+Client Landing Page URL	Selected by me
+Our Landing Page URL	Selected by me
+Our Email HTML URL	Selected by me
+Original Title	Optional
+Original Abstract	Optional
+
+Our Landing Page URL and Our Email HTML URL are required.
+
+The other reference columns depend on the selected reference mode.
+
+Support .xlsx files initially. Legacy .xls support can be added later.
+
+4. Three Reference Modes
+
+This is a very important requirement.
+
+The application must support three modes.
+
+Mode A: Client Landing Page Reference
+
+Sometimes the client provides only a landing page URL.
+
+In this case:
+
+Visit the client landing page.
+Extract the original Title.
+Extract the original Abstract.
+Visit our landing page.
+Extract our Title and Abstract.
+Visit our email page.
+Extract its Title and Abstract.
+Compare both internal pages against the client reference.
+
+The client page is the original source of truth.
+
+Mode B: Excel Title and Abstract Reference
+
+Sometimes the client provides the original Title and Abstract directly in Excel.
+
+In this case:
+
+Select the Excel Title column.
+Select the Excel Abstract column.
+Select our landing page URL.
+Select our email page URL.
+Extract content from our landing and email pages.
+Compare both internal pages against the Excel Title and Abstract.
+
+IMPORTANT:
+
+Do not visit or extract the client landing page in this mode.
+The client URL should be optional.
+Excel Title and Abstract are the reference.
+Do not unnecessarily fetch the client website.
+Mode C: Hybrid Reference Mode
+
+Sometimes the client provides only the Title in Excel but the Abstract must come from the client landing page, or vice versa.
+
+Therefore, add independent reference-source dropdowns:
+
+Reference Title Source:
+
+Client Landing Page
+Excel
+
+Reference Abstract Source:
+
+Client Landing Page
+Excel
+
+The application must fetch only the sources actually required.
+
+For example:
+
+Title from Excel.
+Abstract from Client Landing Page.
+
+This should work independently for each field.
+
+5. Most Important Requirement: Accurate Content Extraction
+
+DO NOT compare the entire webpage.
+
+A webpage contains many irrelevant elements:
+
+Navigation menus.
+Forms.
+First name and last name fields.
+Email and phone fields.
+Submit buttons.
+Privacy policies.
+Footer content.
+Header content.
+Other unrelated text.
+
+We only want the actual Title and Abstract.
+
+Example from my screenshot
+
+The client landing page had this structure:
+
+Title:
+
+"State of Sales: Professional Services Edition"
+
+Abstract:
+
+"Insights and trends from 177 professional services sales professionals around the world."
+
+Then an introductory paragraph:
+
+"Professional services sales teams face a widening gap between commercial expectations and seller capacity as deal cycles lengthen, buying groups expand, and clients want clearer proof of value. Leading firms are using AI to recover time, sharpen execution, and create more capacity for the high-value, relationship-driven work that drives results. Read the report to discover how:"
+
+Then four bullet points:
+
+Seller capacity is under strain.
+Account expansion is becoming a higher priority.
+Buyer demands are rising.
+AI is becoming a core lever for seller productivity.
+
+The entire relevant content in the red-marked area should be considered the Abstract.
+
+The form on the right side must be ignored.
+
+Extraction strategy
+
+I do not want a system that assumes every website has the same HTML structure.
+
+Different clients may use different landing page designs.
+
+Build a flexible extraction system with:
+
+A. Automatic extraction
+
+Look for H1 elements for the title.
+Check relevant meta descriptions.
+Look for likely abstract sections.
+Extract relevant paragraphs and bullet points.
+Ignore forms, navigation, footer, buttons, scripts, styles, and unrelated elements.
+
+B. Manual extraction This is extremely important.
+
+Add a visual content selection feature.
+
+After fetching a webpage, show its extracted text in the application.
+
+Allow me to select or tick the exact content I want:
+
+Title.
+Introductory paragraph.
+Abstract paragraphs.
+Abstract bullet points.
+
+I should be able to exclude:
+
+Form labels.
+Buttons.
+Navigation.
+Footer.
+Irrelevant text.
+
+C. Custom CSS selectors
+
+Allow optional CSS selectors for:
+
+Title.
+Abstract.
+
+Examples:
+
+h1
+.page-title
+.abstract
+#summary
+
+Allow multiple selected elements for an Abstract.
+
+D. Preview before comparison
+
+Before comparing pages, show the extracted Title and Abstract so I can verify that the correct content was selected.
+
+Never silently assume that automatic extraction is correct.
+
+6. Comparison Logic
+
+For each Excel row, compare:
+
+Reference Title vs Our Landing Title.
+
+Reference Title vs Our Email Title.
+
+Reference Abstract vs Our Landing Abstract.
+
+Reference Abstract vs Our Email Abstract.
+
+Do not compare our landing page against our email page as the primary QA reference. Both must be checked against the original reference.
+
+Comparison requirements
+
+Show:
+
+Exact match.
+Mismatch.
+Missing content.
+Additional content.
+Changed words.
+Missing sentences.
+Similarity percentage.
+
+Use normalized comparison that ignores irrelevant differences such as:
+
+Uppercase/lowercase.
+Extra spaces.
+HTML entities.
+Unnecessary whitespace.
+
+However, do not silently ignore meaningful content changes.
+
+Provide two comparison methods if practical:
+
+Exact normalized comparison.
+Similarity comparison.
+
+A high similarity score must not automatically mean PASS if important content is missing.
+
+The QA status should clearly distinguish:
+
+PASS
+MISMATCH
+CONTENT MISSING
+REFERENCE MISSING
+EXTRA CONTENT
+NEEDS MANUAL REVIEW
+FETCH ERROR
+7. Excel QA Report
+
+After processing all rows, generate a new Excel workbook.
+
+Do not overwrite the original Excel file.
+
+The output should be called:
+
+QA_Comparison_Report.xlsx
+
+Include these sheets:
+
+Sheet 1: QA Summary
+
+Include:
+
+Excel row number.
+Reference Title.
+Our Landing Title.
+Our Email Title.
+Landing Title Match Percentage.
+Email Title Match Percentage.
+Reference Abstract.
+Our Landing Abstract.
+Our Email Abstract.
+Landing Abstract Match Percentage.
+Email Abstract Match Percentage.
+Landing Title Status.
+Email Title Status.
+Landing Abstract Status.
+Email Abstract Status.
+Overall QA Status.
+Fetch Errors.
+Sheet 2: Text Differences
+
+Include:
+
+Row Number.
+Field Name (Title or Abstract).
+Page Name (Landing or Email).
+Missing text.
+Additional text.
+Changed text.
+Sheet 3: Optional Detailed Extraction
+
+Include the extracted content from all pages for auditing.
+
+Format the Excel report professionally:
+
+Bold column headings.
+Freeze top row.
+Enable filters.
+Adjust column widths.
+Wrap long text.
+Use appropriate colors for PASS and MISMATCH.
+8. GUI Design
+
+Use Python Tkinter.
+
+The desktop application should have a clean and professional interface.
+
+Screen 1: Excel Upload
+Browse Excel file.
+Display selected filename.
+Display detected column names.
+Screen 2: Reference Mode
+
+Dropdown options:
+
+Client Landing Page.
+Excel Title & Abstract.
+Hybrid - Select Source.
+Screen 3: Column Mapping
+
+Dropdowns:
+
+Client Landing URL.
+Our Landing URL.
+Our Email URL.
+Excel Reference Title.
+Excel Reference Abstract.
+Screen 4: Extraction Settings
+Title CSS selector.
+Abstract CSS selector.
+Automatic extraction option.
+Manual selection option.
+Screen 5: Preview
+
+Show extracted Title and Abstract from all required pages.
+
+Allow me to confirm or edit the extracted content before comparison.
+
+Screen 6: Comparison
+Start Comparison button.
+Progress bar.
+Rows processed.
+Number of successful rows.
+Number of mismatches.
+Number of errors.
+Screen 7: Results
+
+Show a table containing QA results.
+
+Allow filtering by:
+
+PASS.
+MISMATCH.
+NEEDS REVIEW.
+FETCH ERROR.
+
+Add an Export Excel button.
+
+9. Recommended Technology
+
+Use:
+
+Requirement	Technology
+Programming language	Python
+GUI	Tkinter
+Excel reading	openpyxl
+Excel writing	openpyxl
+HTTP requests	requests
+HTML parsing	BeautifulSoup4
+Text comparison	difflib
+URL validation	urllib
+Text normalization	re
+Background processing	threading
+
+No Flask, Django, Laravel, database, or external server is required.
+
+For websites that render their content through JavaScript, investigate an optional browser automation solution later. Do not make it a mandatory dependency in the first version.
+
+10. Important Technical Requirements
+Process multiple Excel rows.
+Handle empty cells.
+Handle invalid URLs.
+Handle HTTP errors and timeouts.
+Continue processing if one URL fails.
+Record errors for each row.
+Do not freeze the GUI during processing.
+Use background threads for network operations.
+Do not overwrite the source Excel file.
+Do not unnecessarily fetch client pages in Excel reference mode.
+Avoid comparing entire webpages.
+Avoid duplicate extracted paragraphs.
+Preserve the actual source text in the report.
+Support different website HTML structures.
+Provide a preview and manual correction workflow.
+11. How I Want You to Help Me
+
+I am a beginner in Python, so follow these instructions carefully.
+
+First explain the complete application architecture.
+Then show the folder structure.
+Explain how to open Windows Command Prompt.
+Give me exact installation commands.
+Tell me exactly which Python files to create.
+Provide complete working code for each file.
+Never provide incomplete snippets when I need a complete file.
+Explain exactly where each code file should be saved.
+Explain how to run the application.
+Help me troubleshoot errors if they occur.
+
+Use simple language and PHP-related comparisons when helpful.
+
+Do not dump an enormous amount of code without explaining it.
+
+Build the application in manageable stages, testing each stage before moving forward.
+
+If you improve the architecture, explain why before changing it.
+
+12. Development Roadmap
+
+Build the project in this order:
+
+Phase 1: Basic Python desktop application and Excel upload.
+
+Phase 2: Automatic Excel header detection and dynamic column mapping.
+
+Phase 3: Three reference modes (Client, Excel, Hybrid).
+
+Phase 4: Website fetching and HTML extraction.
+
+Phase 5: Manual Title and Abstract selection with preview.
+
+Phase 6: Accurate text comparison and difference highlighting.
+
+Phase 7: Excel QA report generation.
+
+Phase 8: Professional GUI improvements and testing.
+
+Phase 9: Optional conversion into a Windows .exe file so I can use it without manually running Python.
+
+13. Final Goal
+
+I want a reliable, reusable QA desktop application.
+
+My ideal workflow:
+
+Open the application.
+Upload any supported Excel file.
+Select the reference mode.
+Map the required Excel columns.
+Verify Title and Abstract extraction.
+Click Start Comparison.
+Review all QA results.
+Download the final Excel report.
+
+The application should save me from manually opening multiple landing pages and email pages and checking their Titles and Abstracts one by one.
+
+Start by explaining the architecture and building Phase 1. Do not skip steps or assume I know Python.

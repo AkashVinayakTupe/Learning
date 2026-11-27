@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="hader">
+        <h1>hello akash</h1>
+
+        <p id="name"></p>
+        <button id="Start">Start</button>
+
+        <button id="stop">Stop</button>
+    </div>
+</body>
+<script>
+
+
+let changeInterval;
+
+document.querySelector('#Start').addEventListener('click', () => {
+
+    const colours = ['red', 'black', 'blue', 'white'];
+
+    let i = 0;
+
+    changeInterval = setInterval(() => {
+        document.body.style.backgroundColor = colours[i];
+
+        i++;
+
+        if (i >= colours.length) {
+            i = 0;
+        }
+
+    }, 1000);
+
+});
+
+
+document.querySelector('#stop').addEventListener('click', () => {
+
+    clearInterval(changeInterval);
+
+    console.log("event stopped");
+
+});
+
+
+setTimeout(function () {
+
+    console.log("happy");
+
+    document.getElementById("name").innerHTML = "hello akas";
+
+}, 2000);
+
+    const fs = require('fs');
+
+fs.writeFile('akash.txt', 'akashhhahhas', (err) => {
+    if (err) {
+        console.log(err);
+        return;
+    }
+
+    console.log('File written successfully!');
+}); 
+
+
+</script>
+</html>

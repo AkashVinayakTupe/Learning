@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XML JSON</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: #f3f4f6;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .card {
+        width: 280px;
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        transition: 0.3s;
+    }
+
+    .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .card img {
+        width: 100%;
+        height: 190px;
+        object-fit: cover;
+    }
+
+    .card-content {
+        padding: 20px;
+    }
+
+    .card h2 {
+        font-size: 21px;
+        color: #222;
+        margin-bottom: 15px;
+    }
+
+    .field {
+        margin-bottom: 12px;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .field span {
+        font-weight: bold;
+        color: #333;
+    }
+</style>
+
+<body>
+
+<div class="card" id="card" style="display: none;">
+
+        <img id="image" src="" alt="Profile Image">
+
+
+        <div class="card-content" id="card-content">
+            <h2 id="name">loading name....</h2>
+
+            <div class="field">
+                <span>bio</span> <span id="bio"></span>
+            </div>
+
+            <div class="field">
+                <span>followers:</span> <span id="followers">followers....</span>
+            </div>
+        </div>
+    </div>
+    <button id="info">Show Info</button>
+    <button id="hide">hide Info</button>
+</body>
+
+<script>
+    const url = "https://api.github.com/users/hiteshchoudhary";
+    const XHR = new XMLHttpRequest();
+    let imagedata;
+    XHR.open('GET', url)
+
+// document.getElementById('info').addEventListener('click',()=>{})
+
+    XHR.onreadystatechange = function () {
+        console.log(XHR.readyState);
+        if (XHR.readyState === 4) {
+            const data = JSON.parse(this.responseText)
+            console.log(data.followers);
+            console.log(data.avatar_url);
+
+            imagedata = data.avatar_url;
+
+            let name = document.querySelector('#name');
+            name.innerHTML = data.login;
+
+            let image = document.querySelector('img');
+            image.setAttribute('src',data.avatar_url)
+            document.querySelector('#bio').innerHTML=data.bio
+            document.querySelector('#followers').innerHTML=data.followers
+          
+         
+
+        }
+
+    }
+
+    XHR.send();
+  let show = document.querySelector('#info');
+  let hide = document.querySelector('#hide');
+        let card = document.querySelector('#card');
+
+        show.addEventListener('click', function () {
+
+            card.style.display = "block";
+
+        });
+        
+        hide.addEventListener('click', function () {
+
+            card.style.display = "none";
+
+        });
+
+
+
+
+</script>
+
+</html>
